@@ -17,15 +17,15 @@ class HashTree(object):
         self.depth = depth
 
     def insertLeft(self):
-        if self.leftChild == None:
+        if self.leftChild is None:
             self.leftChild = HashTree(self.index+1, self.depth+1)
 
     def insertMid(self):
-        if self.midChild == None:
+        if self.midChild is None:
             self.midChild = HashTree(self.index+1, self.depth+1)
 
     def insertRight(self):
-        if self.rightChild == None:
+        if self.rightChild is None:
             self.rightChild = HashTree(self.index+1, self.depth+1)
 
 def TreeGenerate(hashtree):
