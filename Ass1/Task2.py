@@ -128,26 +128,6 @@ def find_prefix_path(head_table_item, head_table):
 def create_conditional_FPtree():
     pass
 
-def big_recrusion(head_table, frequent_item_table, candidate_patten_set):
-
-    if len(frequent_item_table) <= 2:
-        return
-
-    root_node = create_FPtree(frequent_item_table, head_table)
-
-    # root_node.display()
-
-    for head_table_item in reversed(list(head_table)):
-        cond_patten_list, sub_head_table = find_prefix_path(head_table_item, head_table)
-        filter_cond_patten_list = []
-        for item in cond_patten_list:
-            if len(item) == 2:
-                candidate_patten_set.append(item)
-            elif len(item) > 2:
-                filter_cond_patten_list.append(item)
-
-        big_recrusion(sub_head_table, filter_cond_patten_list, candidate_patten_set)
-
 
 if __name__ == "__main__":
 
@@ -159,7 +139,18 @@ if __name__ == "__main__":
 
     frequent_item_table = compute_frequent_item(data,head_table)
 
-    big_recrusion(head_table, frequent_item_table, candidate_patten_set)
+    root_node = create_FPtree(frequent_item_table, head_table)
+
+    # root_node.display()
+
+    for head_table_item in reversed(list(head_table)):
+        cond_patten_list, sub_head_table = find_prefix_path(head_table_item, head_table)
+        for item in sub_head_table:
+            if len(item) == 2:
+                candidate_patten_set.append(item)
+            else:
+                pass
+
 
 '''
 frequent_item_table: [
@@ -169,7 +160,6 @@ frequent_item_table: [
     ['hamburger meat', 'onions', 'rolls/buns', 'whole milk']
     ['bottled water', 'domestic eggs', 'fruit/vegetable juice', 'margarine', 'rolls/buns', 'tropical fruit', 'whipped/sour cream', 'whole milk']
 ]
-
 cond_patten_list: [
     ['onions', 'cream cheese ', 'UHT-milk']
     ['onions', 'cream cheese ', 'bottled water']
@@ -179,13 +169,11 @@ cond_patten_list: [
     ['onions', 'curd', 'bottled water']
     ['onions', 'curd', 'citrus fruit', 'bottle']
 ]
-
 head_table: {
     'whole milk': <__main__.DictValue object at 0x10c183198>, 
     'other vegetables': <__main__.DictValue object at 0x10c183278>, 
     'rolls/buns': <__main__.DictValue object at 0x10c1833c8>
 }
-
 sub_head_table: {
     'tropical fruit': <__main__.DictValue object at 0x10a01c048>,
     'other vegetables': <__main__.DictValue object at 0x109fe7f98>
